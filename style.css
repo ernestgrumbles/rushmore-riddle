@@ -1,1 +1,18 @@
-body { font-family: sans-serif; background-color: #fefefe; } #game { margin-top: 20px; }
+
+body {
+  font-family: sans-serif;
+  background-color: #eef2f3;
+  text-align: center;
+  padding: 20px;
+}
+#question-box {
+  font-size: 20px;
+  margin-top: 20px;
+}
+#answers button {
+  margin: 5px;
+}
+#timer {
+  font-weight: bold;
+  margin-top: 15px;
+}
