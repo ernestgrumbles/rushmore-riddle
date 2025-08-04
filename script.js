@@ -1,1 +1,1 @@
-console.log('Game logic will go here');
+console.log('Full game logic goes here. Trivia, animations, Greg falling, etc.');
