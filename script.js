@@ -1,22 +1,29 @@
 
-document.getElementById('start-btn').addEventListener('click', function () {
-  document.getElementById('intro-screen').style.display = 'none';
-  document.getElementById('game-container').style.display = 'block';
-  startGame();
-});
+document.getElementById('start-btn').addEventListener('click', startGame);
+document.getElementById('restart-btn').addEventListener('click', restartGame);
 
 const questions = [
-  { q: "Which president is on the far left of Mt. Rushmore?", a: ["Lincoln", "Washington", "Jefferson"], correct: 1 },
-  { q: "Which river carved the Grand Canyon?", a: ["Mississippi", "Colorado", "Snake"], correct: 1 },
-  { q: "What’s the capital of Vermont?", a: ["Burlington", "Montpelier", "Rutland"], correct: 1 }
+  { q: "Which U.S. state has the longest coastline?", a: ["California", "Florida", "Alaska"], correct: 2 },
+  { q: "What treaty ended the Revolutionary War?", a: ["Treaty of Paris", "Treaty of Versailles", "Treaty of Ghent"], correct: 0 },
+  { q: "What’s the smallest U.S. capital city by population?", a: ["Montpelier", "Pierre", "Juneau"], correct: 0 },
+  { q: "Which U.S. president had a pet alligator?", a: ["Jackson", "Jefferson", "Lincoln"], correct: 0 },
+  { q: "Which state has the most electoral votes?", a: ["Texas", "Florida", "California"], correct: 2 },
+  { q: "What year did the U.S. enter World War I?", a: ["1914", "1917", "1918"], correct: 1 },
+  { q: "Which city hosted the first U.S. capital?", a: ["New York", "Philadelphia", "Boston"], correct: 0 },
+  { q: "Who was the first president born in a hospital?", a: ["Jimmy Carter", "John F. Kennedy", "Ronald Reagan"], correct: 0 }
 ];
 
-let timeLeft = 90;
-let currentQ = 0;
-let timerId;
+let timeLeft, currentQ, timerId;
 
 function startGame() {
-  updateReaction("Washington: 'Hmm... someone’s approaching my chin...'");
+  document.getElementById('intro-screen').style.display = 'none';
+  document.getElementById('game-container').style.display = 'block';
+  document.getElementById('end-screen').style.display = 'none';
+  timeLeft = 90;
+  currentQ = 0;
+  document.getElementById('time-left').innerText = timeLeft;
+  updateReaction("Washington: 'Back so soon?'");
+  document.getElementById('climber').style.top = '0px';
   timerId = setInterval(() => {
     timeLeft--;
     document.getElementById('time-left').innerText = timeLeft;
@@ -29,10 +36,9 @@ function startGame() {
 }
 
 function showQuestion() {
-  const qBox = document.getElementById('question-box');
-  const ansBox = document.getElementById('answers');
   const q = questions[currentQ];
-  qBox.innerText = q.q;
+  document.getElementById('question-box').innerText = q.q;
+  const ansBox = document.getElementById('answers');
   ansBox.innerHTML = '';
   q.a.forEach((answer, idx) => {
     const btn = document.createElement('button');
@@ -46,6 +52,7 @@ function checkAnswer(selected) {
   const q = questions[currentQ];
   if (selected === q.correct) {
     updateReaction("Washington: 'Correct. Keep climbing!'");
+    animateClimber();
     currentQ++;
     if (currentQ < questions.length) {
       showQuestion();
@@ -53,8 +60,14 @@ function checkAnswer(selected) {
       winGame();
     }
   } else {
-    updateReaction("Washington: 'Wrong. Are you even trying?'");
+    updateReaction("Washington: 'Wrong. Try again.'");
   }
+}
+
+function animateClimber() {
+  const climber = document.getElementById('climber');
+  let currentTop = parseInt(climber.style.top || '0');
+  climber.style.top = (currentTop - 20) + 'px';
 }
 
 function updateReaction(text) {
@@ -62,14 +75,22 @@ function updateReaction(text) {
 }
 
 function gameOver() {
-  document.getElementById('question-box').innerText = "You ran out of time!";
-  document.getElementById('answers').innerHTML = "Greg the Goat falls... 🐐💨";
+  document.getElementById('question-box').innerText = "";
+  document.getElementById('answers').innerHTML = "";
   updateReaction("Washington: 'Told you not to climb through my nose.'");
+  document.getElementById('end-message').innerText = "Greg the Goat falls... 🐐💨";
+  document.getElementById('end-screen').style.display = 'block';
 }
 
 function winGame() {
   clearInterval(timerId);
-  document.getElementById('question-box').innerText = "You've reached the top!";
-  document.getElementById('answers').innerHTML = "🏔️ You are victorious!";
-  updateReaction("Washington: 'Not bad... for a chin invader.'");
+  document.getElementById('question-box').innerText = "";
+  document.getElementById('answers').innerHTML = "";
+  updateReaction("Washington: 'You made it. Somehow.'");
+  document.getElementById('end-message').innerText = "🏔️ You conquered Rushmore!";
+  document.getElementById('end-screen').style.display = 'block';
+}
+
+function restartGame() {
+  location.reload();
 }

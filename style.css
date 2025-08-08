@@ -20,6 +20,9 @@ body {
 }
 #climber {
   width: 50px;
+  position: relative;
+  top: 0;
+  transition: top 0.3s ease;
 }
 #washington-face {
   width: 120px;
@@ -35,4 +38,9 @@ body {
 #timer {
   font-weight: bold;
   margin-top: 15px;
+}
+#restart-btn {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
 }
