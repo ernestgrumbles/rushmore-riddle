@@ -1,0 +1,258 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#4A90C4"/>
+      <stop offset="100%" stop-color="#C8E8FF"/>
+    </linearGradient>
+    <linearGradient id="rock" x1="0" y1="0" x2="0.2" y2="1">
+      <stop offset="0%" stop-color="#C0BCAF"/>
+      <stop offset="50%" stop-color="#9A9488"/>
+      <stop offset="100%" stop-color="#72706A"/>
+    </linearGradient>
+    <linearGradient id="face" x1="0" y1="0" x2="0.1" y2="1">
+      <stop offset="0%" stop-color="#D4D0C4"/>
+      <stop offset="100%" stop-color="#AAAAА0"/>
+    </linearGradient>
+    <linearGradient id="rockface" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#CECABF"/>
+      <stop offset="100%" stop-color="#A8A49A"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Sky -->
+  <rect width="800" height="450" fill="url(#sky)"/>
+
+  <!-- Clouds -->
+  <ellipse cx="80" cy="55" rx="55" ry="22" fill="white" opacity="0.85"/>
+  <ellipse cx="115" cy="45" rx="45" ry="18" fill="white" opacity="0.85"/>
+  <ellipse cx="55" cy="60" rx="35" ry="15" fill="white" opacity="0.7"/>
+
+  <ellipse cx="680" cy="65" rx="65" ry="25" fill="white" opacity="0.85"/>
+  <ellipse cx="720" cy="55" rx="50" ry="20" fill="white" opacity="0.85"/>
+  <ellipse cx="650" cy="72" rx="40" ry="16" fill="white" opacity="0.7"/>
+
+  <ellipse cx="370" cy="35" rx="40" ry="14" fill="white" opacity="0.6"/>
+  <ellipse cx="400" cy="28" rx="35" ry="12" fill="white" opacity="0.6"/>
+
+  <!-- Mountain body -->
+  <polygon points="0,450 0,360 70,280 180,185 310,120 400,95 490,112 610,170 710,250 780,320 800,360 800,450" fill="url(#rock)"/>
+
+  <!-- Mountain shadow layers for depth -->
+  <polygon points="0,450 0,400 40,360 100,320 170,290 240,270 280,280 220,310 130,360 60,410 0,440" fill="#5A5850" opacity="0.25"/>
+  <polygon points="800,450 800,390 740,340 660,295 590,270 530,265 560,290 640,320 720,370 780,420" fill="#5A5850" opacity="0.2"/>
+
+  <!-- Rock cracks / texture lines -->
+  <path d="M230 175 Q215 210 225 260" stroke="#888880" stroke-width="2" fill="none" opacity="0.45"/>
+  <path d="M380 105 Q375 130 385 165" stroke="#888880" stroke-width="1.5" fill="none" opacity="0.4"/>
+  <path d="M520 120 Q535 155 525 200" stroke="#888880" stroke-width="2" fill="none" opacity="0.4"/>
+  <path d="M680 230 Q695 265 680 305" stroke="#888880" stroke-width="1.5" fill="none" opacity="0.35"/>
+  <path d="M140 250 Q130 275 145 300" stroke="#888880" stroke-width="1.5" fill="none" opacity="0.35"/>
+
+  <!-- ===================== WASHINGTON (leftmost) ===================== -->
+  <!-- Stone slab behind face -->
+  <ellipse cx="168" cy="255" rx="73" ry="88" fill="#C8C4B8" stroke="#A0A098" stroke-width="2.5"/>
+
+  <!-- Powdered wig -->
+  <ellipse cx="168" cy="180" rx="68" ry="36" fill="#DDDBD4" stroke="#C0BDB5" stroke-width="2"/>
+  <ellipse cx="104" cy="218" rx="24" ry="38" fill="#DDDBD4" stroke="#C0BDB5" stroke-width="2"/>
+  <ellipse cx="232" cy="218" rx="24" ry="38" fill="#DDDBD4" stroke="#C0BDB5" stroke-width="2"/>
+  <!-- Wig curl details -->
+  <path d="M108 200 Q100 212 106 224 Q100 236 107 248" stroke="#C8C5BE" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <path d="M228 200 Q236 212 230 224 Q236 236 229 248" stroke="#C8C5BE" stroke-width="2" fill="none" stroke-linecap="round"/>
+
+  <!-- Face -->
+  <ellipse cx="168" cy="258" rx="58" ry="70" fill="url(#rockface)" stroke="#A8A8A0" stroke-width="1.5"/>
+
+  <!-- Eyes - weary/annoyed -->
+  <ellipse cx="150" cy="238" rx="9.5" ry="7.5" fill="white" stroke="#909090" stroke-width="1.2"/>
+  <ellipse cx="186" cy="238" rx="9.5" ry="7.5" fill="white" stroke="#909090" stroke-width="1.2"/>
+  <circle cx="152" cy="239" r="5" fill="#3A2D20"/>
+  <circle cx="188" cy="239" r="5" fill="#3A2D20"/>
+  <circle cx="153" cy="237" r="2" fill="white"/>
+  <circle cx="189" cy="237" r="2" fill="white"/>
+  <!-- Heavy eyelids (tired/annoyed) -->
+  <path d="M141 233 Q150 230 159 233" stroke="#B0A898" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <path d="M177 233 Q186 230 195 233" stroke="#B0A898" stroke-width="3" fill="none" stroke-linecap="round"/>
+
+  <!-- Eyebrows - one higher, classic annoyed -->
+  <path d="M139 226 Q150 221 161 225" stroke="#887870" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+  <path d="M175 223 Q186 219 197 225" stroke="#887870" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+
+  <!-- Prominent Roman nose -->
+  <path d="M168 245 L162 268 Q157 274 160 277 Q168 280 176 277 Q179 274 174 268 Z" fill="#BABAB0" stroke="#9A9A92" stroke-width="1.2"/>
+
+  <!-- Tight pursed mouth -->
+  <path d="M153 292 Q168 289 183 292" stroke="#909088" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <path d="M153 292 Q168 295 183 292" stroke="#A0A098" stroke-width="1" fill="none" stroke-linecap="round"/>
+
+  <!-- Cheek lines -->
+  <path d="M122 255 Q118 268 122 280" stroke="#B0AEA8" stroke-width="1.5" fill="none" opacity="0.6"/>
+  <path d="M214 255 Q218 268 214 280" stroke="#B0AEA8" stroke-width="1.5" fill="none" opacity="0.6"/>
+
+  <!-- Label -->
+  <text x="168" y="355" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="#666658" font-style="italic" font-weight="bold">Washington</text>
+
+  <!-- ===================== JEFFERSON (second) ===================== -->
+  <!-- Stone slab -->
+  <ellipse cx="308" cy="212" rx="66" ry="82" fill="#C8C4B8" stroke="#A0A098" stroke-width="2.5"/>
+
+  <!-- Curly hair -->
+  <ellipse cx="308" cy="142" rx="60" ry="30" fill="#C0B898" stroke="#A89880" stroke-width="1.8"/>
+  <!-- Curl texture on top -->
+  <path d="M255 150 Q262 140 270 150 Q277 140 285 150 Q292 140 300 150 Q307 140 315 150 Q322 140 330 150 Q337 140 344 150 Q351 140 358 150" stroke="#A89878" stroke-width="2.2" fill="none"/>
+  <!-- Side curls -->
+  <ellipse cx="252" cy="172" rx="20" ry="30" fill="#C0B898" stroke="#A89880" stroke-width="1.8"/>
+  <ellipse cx="364" cy="172" rx="20" ry="30" fill="#C0B898" stroke="#A89880" stroke-width="1.8"/>
+  <path d="M238 162 Q232 174 238 186 Q232 198 239 208" stroke="#B0A888" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <path d="M378 162 Q384 174 378 186 Q384 198 377 208" stroke="#B0A888" stroke-width="2" fill="none" stroke-linecap="round"/>
+
+  <!-- Face -->
+  <ellipse cx="308" cy="215" rx="52" ry="65" fill="url(#rockface)" stroke="#A8A8A0" stroke-width="1.5"/>
+
+  <!-- Eyes - side glance / skeptical -->
+  <ellipse cx="292" cy="196" rx="9" ry="7" fill="white" stroke="#909090" stroke-width="1.2"/>
+  <ellipse cx="324" cy="196" rx="9" ry="7" fill="white" stroke="#909090" stroke-width="1.2"/>
+  <circle cx="295" cy="197" r="5" fill="#3A2D20"/>
+  <circle cx="327" cy="197" r="5" fill="#3A2D20"/>
+  <circle cx="296" cy="195" r="2" fill="white"/>
+  <circle cx="328" cy="195" r="2" fill="white"/>
+  <!-- Eyelids slightly lowered -->
+  <path d="M284 192 Q292 189 300 192" stroke="#B0A898" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+  <path d="M316 192 Q324 189 332 192" stroke="#B0A898" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+
+  <!-- Eyebrows - arched skeptically -->
+  <path d="M282 185 Q292 180 302 185" stroke="#887870" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <path d="M314 183 Q324 178 334 183" stroke="#887870" stroke-width="3" fill="none" stroke-linecap="round"/>
+
+  <!-- Long angular nose -->
+  <path d="M308 203 L302 222 Q298 228 301 231 Q308 234 315 231 Q318 228 314 222 Z" fill="#BABAB0" stroke="#9A9A92" stroke-width="1.2"/>
+
+  <!-- Mouth - wry smirk (one side up) -->
+  <path d="M294 248 Q301 251 308 249 Q318 244 322 247" stroke="#909088" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+
+  <!-- Label -->
+  <text x="308" y="305" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="#666658" font-style="italic" font-weight="bold">Jefferson</text>
+
+  <!-- ===================== ROOSEVELT (third) ===================== -->
+  <!-- Stone slab -->
+  <ellipse cx="460" cy="202" rx="68" ry="80" fill="#C8C4B8" stroke="#A0A098" stroke-width="2.5"/>
+
+  <!-- Hair - dark wavy -->
+  <ellipse cx="460" cy="135" rx="60" ry="27" fill="#6A5038" stroke="#5A4028" stroke-width="1.8"/>
+  <path d="M405 140 Q412 128 422 138 Q432 128 442 138 Q452 128 462 138 Q472 128 482 138 Q492 128 502 140 Q510 130 515 142" stroke="#5A4030" stroke-width="2" fill="none"/>
+  <!-- Side hair -->
+  <ellipse cx="400" cy="162" rx="19" ry="26" fill="#6A5038" stroke="#5A4028" stroke-width="1.8"/>
+  <ellipse cx="520" cy="162" rx="19" ry="26" fill="#6A5038" stroke="#5A4028" stroke-width="1.8"/>
+
+  <!-- Face -->
+  <ellipse cx="460" cy="205" rx="55" ry="64" fill="url(#rockface)" stroke="#A8A8A0" stroke-width="1.5"/>
+
+  <!-- Round wire glasses -->
+  <circle cx="441" cy="191" r="17" fill="none" stroke="#706858" stroke-width="3"/>
+  <circle cx="479" cy="191" r="17" fill="none" stroke="#706858" stroke-width="3"/>
+  <line x1="458" y1="191" x2="462" y2="191" stroke="#706858" stroke-width="2.5"/>
+  <line x1="424" y1="187" x2="411" y2="182" stroke="#706858" stroke-width="2.5"/>
+  <line x1="496" y1="187" x2="509" y2="182" stroke="#706858" stroke-width="2.5"/>
+
+  <!-- Eyes behind glasses - wide/excitable -->
+  <ellipse cx="441" cy="191" rx="9" ry="7.5" fill="white"/>
+  <ellipse cx="479" cy="191" rx="9" ry="7.5" fill="white"/>
+  <circle cx="443" cy="192" r="5" fill="#3A2D20"/>
+  <circle cx="481" cy="192" r="5" fill="#3A2D20"/>
+  <circle cx="444" cy="190" r="2" fill="white"/>
+  <circle cx="482" cy="190" r="2" fill="white"/>
+
+  <!-- Bushy eyebrows - raised in mock surprise -->
+  <path d="M428 172 Q441 166 454 172" stroke="#6A5038" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+  <path d="M466 172 Q479 166 492 172" stroke="#6A5038" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+
+  <!-- Substantial nose -->
+  <ellipse cx="460" cy="208" rx="11" ry="9" fill="#BABAB0" stroke="#9A9A92" stroke-width="1.2"/>
+
+  <!-- Big walrus mustache -->
+  <path d="M428 218 Q440 213 452 216 Q460 219 468 216 Q480 213 492 218 Q488 228 480 230 Q470 233 460 230 Q450 233 440 230 Q432 228 428 218 Z" fill="#7A6048" stroke="#6A5038" stroke-width="1.5"/>
+  <!-- Mustache highlights -->
+  <path d="M433 220 Q442 215 451 218" stroke="#9A8060" stroke-width="1.5" fill="none" opacity="0.5"/>
+  <path d="M469 218 Q478 215 487 220" stroke="#9A8060" stroke-width="1.5" fill="none" opacity="0.5"/>
+
+  <!-- Label -->
+  <text x="460" y="296" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="#666658" font-style="italic" font-weight="bold">Roosevelt</text>
+
+  <!-- ===================== LINCOLN (rightmost) ===================== -->
+  <!-- Stone slab - taller/narrower -->
+  <ellipse cx="615" cy="238" rx="62" ry="95" fill="#C8C4B8" stroke="#A0A098" stroke-width="2.5"/>
+
+  <!-- Dark swept-back hair -->
+  <ellipse cx="615" cy="155" rx="56" ry="30" fill="#2A1E14" stroke="#1E140A" stroke-width="1.8"/>
+  <path d="M562 162 Q558 145 575 138 Q595 130 615 132 Q635 130 655 140 Q668 148 664 165" fill="#2A1E14" stroke="#1E140A" stroke-width="1.5"/>
+
+  <!-- Face - longer/narrower -->
+  <ellipse cx="615" cy="242" rx="48" ry="82" fill="url(#rockface)" stroke="#A8A8A0" stroke-width="1.5"/>
+
+  <!-- Sunken eyes - serious/doleful -->
+  <ellipse cx="599" cy="218" rx="9" ry="7.5" fill="white" stroke="#909090" stroke-width="1.2"/>
+  <ellipse cx="631" cy="218" rx="9" ry="7.5" fill="white" stroke="#909090" stroke-width="1.2"/>
+  <circle cx="601" cy="219" r="5" fill="#1E140A"/>
+  <circle cx="633" cy="219" r="5" fill="#1E140A"/>
+  <circle cx="602" cy="217" r="2" fill="white"/>
+  <circle cx="634" cy="217" r="2" fill="white"/>
+  <!-- Heavy-lidded -->
+  <path d="M590 213 Q599 209 608 213" stroke="#A09890" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <path d="M622 213 Q631 209 640 213" stroke="#A09890" stroke-width="3" fill="none" stroke-linecap="round"/>
+
+  <!-- Deep furrowed brows - crease in the middle -->
+  <path d="M588 206 Q599 201 610 206" stroke="#6A5A50" stroke-width="4" fill="none" stroke-linecap="round"/>
+  <path d="M620 206 Q631 201 642 206" stroke="#6A5A50" stroke-width="4" fill="none" stroke-linecap="round"/>
+  <path d="M611 200 Q615 195 619 200" stroke="#9A9090" stroke-width="2" fill="none"/>
+
+  <!-- Long angular nose -->
+  <path d="M615 226 L609 248 Q605 255 608 258 Q615 261 622 258 Q625 255 621 248 Z" fill="#BABAB0" stroke="#9A9A92" stroke-width="1.2"/>
+
+  <!-- Thin lips - long face, slight frown -->
+  <path d="M600 272 Q615 275 630 272" stroke="#909088" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+
+  <!-- Chin beard - iconic -->
+  <ellipse cx="615" cy="298" rx="24" ry="20" fill="#2A1E14" stroke="#1A1008" stroke-width="1.5"/>
+  <!-- Beard texture -->
+  <path d="M600 284 Q606 295 602 305" stroke="#3A2E24" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <path d="M615 286 Q615 298 615 308" stroke="#3A2E24" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <path d="M630 284 Q624 295 628 305" stroke="#3A2E24" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+
+  <!-- Gaunt cheek lines -->
+  <path d="M570 228 Q565 248 570 265" stroke="#ACA8A0" stroke-width="1.5" fill="none" opacity="0.55"/>
+  <path d="M660 228 Q665 248 660 265" stroke="#ACA8A0" stroke-width="1.5" fill="none" opacity="0.55"/>
+
+  <!-- Label -->
+  <text x="615" y="340" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="#666658" font-style="italic" font-weight="bold">Lincoln</text>
+
+  <!-- ===================== MOUNTAIN GOAT at peak ===================== -->
+  <ellipse cx="393" cy="108" rx="20" ry="13" fill="#F0EEE8" stroke="#CCC8C0" stroke-width="1.5"/>
+  <ellipse cx="407" cy="99" rx="13" ry="10" fill="#F0EEE8" stroke="#CCC8C0" stroke-width="1.5"/>
+  <!-- Legs -->
+  <line x1="386" y1="120" x2="384" y2="133" stroke="#CCC8C0" stroke-width="2.5"/>
+  <line x1="393" y1="121" x2="392" y2="134" stroke="#CCC8C0" stroke-width="2.5"/>
+  <line x1="401" y1="121" x2="402" y2="134" stroke="#CCC8C0" stroke-width="2.5"/>
+  <line x1="408" y1="120" x2="410" y2="133" stroke="#CCC8C0" stroke-width="2.5"/>
+  <!-- Horns -->
+  <path d="M402 92 Q400 83 403 79" stroke="#B0ACA5" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <path d="M410 90 Q411 81 415 78" stroke="#B0ACA5" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <!-- Goat eye - mischievous -->
+  <circle cx="413" cy="101" r="2.5" fill="#555"/>
+  <circle cx="414" cy="100" r="1" fill="white"/>
+  <!-- Goat beard -->
+  <path d="M404 107 Q403 113 405 116" stroke="#D8D5CE" stroke-width="2" fill="none" stroke-linecap="round"/>
+
+  <!-- Pine trees at bottom edges -->
+  <polygon points="22,430 33,400 44,430" fill="#2A5225"/>
+  <polygon points="36,435 50,398 64,435" fill="#2A5225"/>
+  <polygon points="62,438 74,408 86,438" fill="#2A5225"/>
+
+  <polygon points="715,428 726,400 737,428" fill="#2A5225"/>
+  <polygon points="730,432 743,402 756,432" fill="#2A5225"/>
+  <polygon points="750,435 762,405 774,435" fill="#2A5225"/>
+
+  <!-- Rock ledges for texture -->
+  <path d="M90 305 Q130 295 175 302 Q200 307 230 300" stroke="#9A9890" stroke-width="3" fill="none" opacity="0.55"/>
+  <path d="M570 272 Q615 262 665 270 Q695 276 730 268" stroke="#9A9890" stroke-width="3" fill="none" opacity="0.55"/>
+  <path d="M320 130 Q360 122 400 127 Q430 131 460 125" stroke="#9A9890" stroke-width="2" fill="none" opacity="0.45"/>
+</svg>
