@@ -2,6 +2,93 @@
 document.getElementById('start-btn').addEventListener('click', startGame);
 document.getElementById('restart-btn').addEventListener('click', restartGame);
 
+// ── Sound effects (Web Audio API — no files needed) ──────────────────────────
+let audioCtx = null;
+function getAudio() {
+  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  return audioCtx;
+}
+
+function playCorrect() {
+  const ctx = getAudio(), now = ctx.currentTime;
+  [220, 330].forEach((freq, i) => {
+    const osc = ctx.createOscillator(), g = ctx.createGain();
+    osc.connect(g); g.connect(ctx.destination);
+    osc.type = 'sine'; osc.frequency.value = freq;
+    const t = now + i * 0.09;
+    g.gain.setValueAtTime(0.25, t);
+    g.gain.exponentialRampToValueAtTime(0.001, t + 0.2);
+    osc.start(t); osc.stop(t + 0.2);
+  });
+}
+
+function playWrong() {
+  const ctx = getAudio(), now = ctx.currentTime;
+  const osc = ctx.createOscillator(), g = ctx.createGain();
+  osc.connect(g); g.connect(ctx.destination);
+  osc.type = 'sawtooth';
+  osc.frequency.setValueAtTime(380, now);
+  osc.frequency.exponentialRampToValueAtTime(75, now + 0.5);
+  g.gain.setValueAtTime(0.2, now);
+  g.gain.exponentialRampToValueAtTime(0.001, now + 0.5);
+  osc.start(now); osc.stop(now + 0.5);
+}
+
+function playYelp() {
+  const ctx = getAudio(), now = ctx.currentTime;
+  const osc = ctx.createOscillator(), g = ctx.createGain();
+  osc.connect(g); g.connect(ctx.destination);
+  osc.type = 'sine';
+  osc.frequency.setValueAtTime(750, now);
+  osc.frequency.exponentialRampToValueAtTime(320, now + 0.18);
+  g.gain.setValueAtTime(0.14, now);
+  g.gain.exponentialRampToValueAtTime(0.001, now + 0.18);
+  osc.start(now); osc.stop(now + 0.18);
+}
+
+function playGoatBleat() {
+  const ctx = getAudio(), now = ctx.currentTime;
+  const osc = ctx.createOscillator(), lfo = ctx.createOscillator();
+  const lfoGain = ctx.createGain(), g = ctx.createGain();
+  lfo.connect(lfoGain); lfoGain.connect(osc.frequency);
+  osc.connect(g); g.connect(ctx.destination);
+  osc.type = 'sawtooth'; osc.frequency.value = 290;
+  lfo.frequency.value = 10; lfoGain.gain.value = 55;
+  g.gain.setValueAtTime(0, now);
+  g.gain.linearRampToValueAtTime(0.18, now + 0.06);
+  g.gain.setValueAtTime(0.18, now + 0.38);
+  g.gain.exponentialRampToValueAtTime(0.001, now + 0.65);
+  lfo.start(now); osc.start(now);
+  lfo.stop(now + 0.65); osc.stop(now + 0.65);
+}
+
+function playWin() {
+  const ctx = getAudio(), now = ctx.currentTime;
+  [262, 330, 392, 523, 659].forEach((freq, i) => {
+    const osc = ctx.createOscillator(), g = ctx.createGain();
+    osc.connect(g); g.connect(ctx.destination);
+    osc.type = 'square'; osc.frequency.value = freq;
+    const t = now + i * 0.13;
+    g.gain.setValueAtTime(0.12, t);
+    g.gain.exponentialRampToValueAtTime(0.001, t + 0.4);
+    osc.start(t); osc.stop(t + 0.4);
+  });
+}
+
+function playLose() {
+  const ctx = getAudio(), now = ctx.currentTime;
+  [392, 330, 262, 196].forEach((freq, i) => {
+    const osc = ctx.createOscillator(), g = ctx.createGain();
+    osc.connect(g); g.connect(ctx.destination);
+    osc.type = 'triangle'; osc.frequency.value = freq;
+    const t = now + i * 0.22;
+    g.gain.setValueAtTime(0.15, t);
+    g.gain.exponentialRampToValueAtTime(0.001, t + 0.5);
+    osc.start(t); osc.stop(t + 0.5);
+  });
+}
+// ─────────────────────────────────────────────────────────────────────────────
+
 const questions = [
   { q: "Which U.S. state has the longest coastline?", a: ["California", "Florida", "Alaska"], correct: 2 },
   { q: "What treaty ended the Revolutionary War?", a: ["Treaty of Paris", "Treaty of Versailles", "Treaty of Ghent"], correct: 0 },
@@ -141,11 +228,15 @@ function positionClimber(step) {
     climber.style.transform = currLeft < prevLeft ? 'scaleX(-1)' : 'scaleX(1)';
   }
 
+  if (step > 0) playCorrect();
+  if (step === 11) setTimeout(playGoatBleat, 400);
+  if (arrivalReactions[step]) playYelp();
   showReaction(arrivalReactions[step]);
 }
 
 function slipClimber() {
   const area = document.getElementById('climber-area');
+  playWrong();
   area.classList.add('slipping');
   setTimeout(() => area.classList.remove('slipping'), 600);
   showReaction(wrongReactions[currentQ]);
@@ -156,6 +247,7 @@ function updateReaction(text) {
 }
 
 function gameOver() {
+  playLose();
   clearInterval(timerId);
   document.getElementById('question-box').innerText = '';
   document.getElementById('answers').innerHTML = '';
@@ -164,6 +256,7 @@ function gameOver() {
 }
 
 function winGame() {
+  playWin();
   clearInterval(timerId);
   document.getElementById('question-box').innerText = '';
   document.getElementById('answers').innerHTML = '';
