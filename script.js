@@ -92,12 +92,12 @@ function positionClimber(step) {
   area.style.left = pos.left;
   area.style.bottom = pos.bottom;
 
-  // Flip sprite to face direction of travel
+  // Sprite faces right by default; flip only when moving left
   const climber = document.getElementById('climber');
   if (step > 0) {
     const prevLeft = parseFloat(climberPath[step - 1].left);
     const currLeft = parseFloat(pos.left);
-    climber.style.transform = currLeft > prevLeft ? 'scaleX(-1)' : 'scaleX(1)';
+    climber.style.transform = currLeft < prevLeft ? 'scaleX(-1)' : 'scaleX(1)';
   }
 }
 
