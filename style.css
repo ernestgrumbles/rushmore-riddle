@@ -174,7 +174,32 @@ body {
 
 #restart-btn:hover { background: #A0522D; }
 
-/* ── Climber — hidden for now until we add animation ── */
+/* ── Climber ── */
 #climber-area {
-  display: none;
+  position: absolute;
+  bottom: 13%;
+  left: 28%;
+  transform: translateX(-50%);
+  z-index: 10;
+  transition: left 0.7s cubic-bezier(0.4, 0, 0.2, 1),
+              bottom 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#climber {
+  width: 58px;
+  display: block;
+  transition: transform 0.2s ease;
+  filter: drop-shadow(2px 3px 4px rgba(0,0,0,0.45));
+}
+
+@keyframes slip {
+  0%   { transform: translateX(0) rotate(0deg); }
+  25%  { transform: translateX(8px) rotate(15deg); }
+  50%  { transform: translateX(-6px) rotate(-10deg); }
+  75%  { transform: translateX(4px) rotate(8deg); }
+  100% { transform: translateX(0) rotate(0deg); }
+}
+
+#climber-area.slipping {
+  animation: slip 0.55s ease;
 }
