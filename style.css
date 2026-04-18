@@ -186,10 +186,10 @@ body {
 }
 
 #climber {
-  width: 58px;
+  width: 64px;
   display: block;
   transition: transform 0.2s ease;
-  filter: drop-shadow(2px 3px 4px rgba(0,0,0,0.45));
+  filter: drop-shadow(2px 4px 5px rgba(0,0,0,0.5));
 }
 
 @keyframes slip {
