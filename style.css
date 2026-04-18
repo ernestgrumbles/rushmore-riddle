@@ -141,6 +141,55 @@ body {
 
 #answers button:hover { background: #D4C070; }
 
+/* ── Speech bubble ── */
+#speech-bubble {
+  position: absolute;
+  background: white;
+  border: 3px solid #222;
+  border-radius: 14px;
+  padding: 8px 14px;
+  max-width: 190px;
+  text-align: center;
+  font-family: Georgia, serif;
+  font-size: 13px;
+  font-weight: bold;
+  line-height: 1.35;
+  color: #1A1008;
+  z-index: 25;
+  pointer-events: none;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  box-shadow: 2px 3px 8px rgba(0,0,0,0.35);
+}
+
+#speech-bubble.visible { opacity: 1; }
+
+#bubble-text { margin: 0; }
+
+/* Tail border (dark, larger, painted first = behind) */
+#speech-bubble::before {
+  content: '';
+  position: absolute;
+  bottom: -19px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 13px solid transparent;
+  border-right: 13px solid transparent;
+  border-top: 19px solid #222;
+}
+/* Tail fill (white, smaller, painted after = in front) */
+#speech-bubble::after {
+  content: '';
+  position: absolute;
+  bottom: -13px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 13px solid white;
+}
+
 /* ── End screen overlay ── */
 #end-screen {
   position: absolute;

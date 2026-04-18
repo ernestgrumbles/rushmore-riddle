@@ -36,6 +36,46 @@ const climberPath = [
   { bottom: '80%', left: '52%' },  // 12: at the peak — win!
 ];
 
+// Reactions shown when the climber ARRIVES at a step (correct answer).
+// Bubbles are positioned in the sky above each president's face.
+const arrivalReactions = {
+  3:  { text: `Washington: "Watch the chin, pal."`,          left: '27%', bottom: '74%' },
+  4:  { text: `Washington: "He grabbed my LIP!!"`,           left: '26%', bottom: '76%' },
+  5:  { text: `Washington: "There is a BOOT in my NOSTRIL."`,left: '28%', bottom: '78%' },
+  6:  { text: `Washington: "MY EYE. He poked MY EYE."`,      left: '26%', bottom: '73%' },
+  7:  { text: `Jefferson: "Ha! Look at George's face 😄"`,   left: '45%', bottom: '73%' },
+  8:  { text: `Jefferson: "Oh no. Oh no no no—"`,            left: '45%', bottom: '71%' },
+  9:  { text: `Roosevelt: "NOT. THE. MUSTACHE."`,            left: '61%', bottom: '70%' },
+  10: { text: `Lincoln: "...deeply undignified."`,           left: '66%', bottom: '71%' },
+  11: { text: `Roosevelt: "I respect the commitment."`,      left: '54%', bottom: '73%' },
+};
+
+// Reactions shown when the player gets a WRONG answer at that position.
+const wrongReactions = {
+  3:  { text: `Washington: "Fall. Just FALL."`,              left: '27%', bottom: '74%' },
+  4:  { text: `Washington: "Ha! That's for the lip!"`,       left: '26%', bottom: '76%' },
+  5:  { text: `Washington: "MY NOSTRIL IS AVENGED."`,        left: '28%', bottom: '78%' },
+  6:  { text: `Washington: "Good. FALL. Far."`,              left: '26%', bottom: '73%' },
+  7:  { text: `Jefferson: "Ooh! So close... 😬"`,            left: '45%', bottom: '73%' },
+  8:  { text: `Jefferson: "Phew. The nose is safe."`,        left: '45%', bottom: '71%' },
+  9:  { text: `Roosevelt: "HA! The 'stache is SAFE!"`,       left: '61%', bottom: '70%' },
+  10: { text: `Lincoln: "The beard thanks you."`,            left: '66%', bottom: '71%' },
+  11: { text: `Goat: "Not today, friend."`,                  left: '54%', bottom: '73%' },
+};
+
+let bubbleTimer = null;
+
+function showReaction(reaction) {
+  if (!reaction) return;
+  const bubble = document.getElementById('speech-bubble');
+  document.getElementById('bubble-text').textContent = reaction.text;
+  bubble.style.left   = reaction.left;
+  bubble.style.bottom = reaction.bottom;
+  bubble.classList.add('visible');
+  clearTimeout(bubbleTimer);
+  bubbleTimer = setTimeout(() => bubble.classList.remove('visible'), 3200);
+}
+
 let timeLeft, currentQ, timerId;
 
 function startGame() {
@@ -46,6 +86,7 @@ function startGame() {
   timeLeft = 120;
   currentQ = 0;
   document.getElementById('time-left').innerText = timeLeft;
+  document.getElementById('speech-bubble').classList.remove('visible');
   positionClimber(0);
   timerId = setInterval(() => {
     timeLeft--;
@@ -99,12 +140,15 @@ function positionClimber(step) {
     const currLeft = parseFloat(pos.left);
     climber.style.transform = currLeft < prevLeft ? 'scaleX(-1)' : 'scaleX(1)';
   }
+
+  showReaction(arrivalReactions[step]);
 }
 
 function slipClimber() {
   const area = document.getElementById('climber-area');
   area.classList.add('slipping');
   setTimeout(() => area.classList.remove('slipping'), 600);
+  showReaction(wrongReactions[currentQ]);
 }
 
 function updateReaction(text) {
