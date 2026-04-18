@@ -6,7 +6,7 @@ const questions = [
   { q: "Which U.S. state has the longest coastline?", a: ["California", "Florida", "Alaska"], correct: 2 },
   { q: "What treaty ended the Revolutionary War?", a: ["Treaty of Paris", "Treaty of Versailles", "Treaty of Ghent"], correct: 0 },
   { q: "What’s the smallest U.S. capital city by population?", a: ["Montpelier", "Pierre", "Juneau"], correct: 0 },
-  { q: "Which U.S. president had a pet alligator?", a: ["Jackson", "Jefferson", "Lincoln"], correct: 0 },
+  { q: "Which U.S. president had a pet alligator?", a: ["John Quincy Adams", "Jefferson", "Lincoln"], correct: 0 },
   { q: "Which state has the most electoral votes?", a: ["Texas", "Florida", "California"], correct: 2 },
   { q: "What year did the U.S. enter World War I?", a: ["1914", "1917", "1918"], correct: 1 },
   { q: "Which city hosted the first U.S. capital?", a: ["New York", "Philadelphia", "Boston"], correct: 0 },
@@ -16,6 +16,7 @@ const questions = [
 let timeLeft, currentQ, timerId;
 
 function startGame() {
+  clearInterval(timerId);
   document.getElementById('intro-screen').style.display = 'none';
   document.getElementById('game-container').style.display = 'block';
   document.getElementById('end-screen').style.display = 'none';
@@ -92,5 +93,5 @@ function winGame() {
 }
 
 function restartGame() {
-  location.reload();
+  startGame();
 }
