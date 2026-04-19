@@ -252,3 +252,14 @@ body {
 #climber-area.slipping {
   animation: slip 0.55s ease;
 }
+
+@keyframes fall-off {
+  0%   { transform: scaleX(1) rotate(0deg) translateX(0); opacity: 1; }
+  20%  { transform: scaleX(1) rotate(30deg) translateX(20px); opacity: 1; }
+  60%  { transform: scaleX(1) rotate(120deg) translateX(60px); opacity: 0.7; }
+  100% { transform: scaleX(1) rotate(360deg) translateX(100px) translateY(80px); opacity: 0; }
+}
+
+#climber.falling {
+  animation: fall-off 1.3s ease-in forwards;
+}
