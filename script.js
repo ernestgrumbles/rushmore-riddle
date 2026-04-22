@@ -184,44 +184,45 @@ function shuffleAndSelectQuestions() {
 }
 
 // Waypoints trace a path up the mountain, through each president's face.
+// Calibrated for landscape mountain-bg.png.
 const climberPath = [
-  { bottom: '13%', left: '28%' },  // 0: base of mountain
-  { bottom: '22%', left: '26%' },  // 1: lower rock face
-  { bottom: '33%', left: '23%' },  // 2: mid-mountain
-  { bottom: '44%', left: '20%' },  // 3: Washington's chin
-  { bottom: '50%', left: '17%' },  // 4: Washington's lips
-  { bottom: '56%', left: '15%' },  // 5: Washington's nose
-  { bottom: '61%', left: '18%' },  // 6: Washington's eye
-  { bottom: '67%', left: '27%' },  // 7: top of Washington's head
-  { bottom: '58%', left: '42%' },  // 8: Jefferson's face
-  { bottom: '51%', left: '60%' },  // 9: Roosevelt's mustache
-  { bottom: '50%', left: '76%' },  // 10: Lincoln's chin/beard
-  { bottom: '67%', left: '60%' },  // 11: upper mountain
-  { bottom: '80%', left: '52%' },  // 12: at the peak — win!
+  { bottom: '26%', left: '10%' },  // 0: base of mountain
+  { bottom: '36%', left: '10%' },  // 1: lower rock face
+  { bottom: '46%', left: '11%' },  // 2: mid-mountain
+  { bottom: '52%', left: '13%' },  // 3: Washington's chin
+  { bottom: '56%', left: '12%' },  // 4: Washington's lips
+  { bottom: '61%', left: '13%' },  // 5: Washington's nose
+  { bottom: '66%', left: '16%' },  // 6: Washington's eye
+  { bottom: '72%', left: '20%' },  // 7: top of Washington's head
+  { bottom: '62%', left: '37%' },  // 8: Jefferson's face
+  { bottom: '58%', left: '57%' },  // 9: Roosevelt's mustache
+  { bottom: '58%', left: '76%' },  // 10: Lincoln's chin/beard
+  { bottom: '76%', left: '50%' },  // 11: upper mountain
+  { bottom: '88%', left: '47%' },  // 12: at the peak — win!
 ];
 
 const arrivalReactions = {
-  3:  { text: `Washington: "Watch the chin, pal."`,          left: '27%', bottom: '74%' },
-  4:  { text: `Washington: "He grabbed my LIP!!"`,           left: '26%', bottom: '76%' },
-  5:  { text: `Washington: "There is a BOOT in my NOSTRIL."`,left: '28%', bottom: '78%' },
-  6:  { text: `Washington: "MY EYE. He poked MY EYE."`,      left: '26%', bottom: '73%' },
-  7:  { text: `Jefferson: "Ha! Look at George's face 😄"`,   left: '45%', bottom: '73%' },
-  8:  { text: `Jefferson: "Oh no. Oh no no no—"`,            left: '45%', bottom: '71%' },
-  9:  { text: `Roosevelt: "NOT. THE. MUSTACHE."`,            left: '61%', bottom: '70%' },
-  10: { text: `Lincoln: "...deeply undignified."`,           left: '66%', bottom: '71%' },
-  11: { text: `Goat: "One more question... don't blow it. 🐐"`, left: '54%', bottom: '73%' },
+  3:  { text: `Washington: "Watch the chin, pal."`,             left: '16%', bottom: '78%' },
+  4:  { text: `Washington: "He grabbed my LIP!!"`,              left: '16%', bottom: '78%' },
+  5:  { text: `Washington: "There is a BOOT in my NOSTRIL."`,   left: '18%', bottom: '78%' },
+  6:  { text: `Washington: "MY EYE. He poked MY EYE."`,         left: '16%', bottom: '78%' },
+  7:  { text: `Jefferson: "Ha! Look at George's face 😄"`,      left: '38%', bottom: '78%' },
+  8:  { text: `Jefferson: "Oh no. Oh no no no—"`,               left: '38%', bottom: '78%' },
+  9:  { text: `Roosevelt: "NOT. THE. MUSTACHE."`,               left: '58%', bottom: '74%' },
+  10: { text: `Lincoln: "...deeply undignified."`,              left: '76%', bottom: '74%' },
+  11: { text: `Goat: "One more question... don't blow it. 🐐"`, left: '50%', bottom: '82%' },
 };
 
 const wrongReactions = {
-  3:  { text: `Washington: "Fall. Just FALL."`,              left: '27%', bottom: '74%' },
-  4:  { text: `Washington: "Ha! That's for the lip!"`,       left: '26%', bottom: '76%' },
-  5:  { text: `Washington: "MY NOSTRIL IS AVENGED."`,        left: '28%', bottom: '78%' },
-  6:  { text: `Washington: "Good. FALL. Far."`,              left: '26%', bottom: '73%' },
-  7:  { text: `Jefferson: "Ooh! So close... 😬"`,            left: '45%', bottom: '73%' },
-  8:  { text: `Jefferson: "Phew. The nose is safe."`,        left: '45%', bottom: '71%' },
-  9:  { text: `Roosevelt: "HA! The 'stache is SAFE!"`,       left: '61%', bottom: '70%' },
-  10: { text: `Lincoln: "The beard thanks you."`,            left: '66%', bottom: '71%' },
-  11: { text: `Goat: "WRONG!! 🐐💥"`,                        left: '54%', bottom: '73%' },
+  3:  { text: `Washington: "Fall. Just FALL."`,              left: '16%', bottom: '78%' },
+  4:  { text: `Washington: "Ha! That's for the lip!"`,       left: '16%', bottom: '78%' },
+  5:  { text: `Washington: "MY NOSTRIL IS AVENGED."`,        left: '18%', bottom: '78%' },
+  6:  { text: `Washington: "Good. FALL. Far."`,              left: '16%', bottom: '78%' },
+  7:  { text: `Jefferson: "Ooh! So close... 😬"`,            left: '38%', bottom: '78%' },
+  8:  { text: `Jefferson: "Phew. The nose is safe."`,        left: '38%', bottom: '78%' },
+  9:  { text: `Roosevelt: "HA! The 'stache is SAFE!"`,       left: '58%', bottom: '74%' },
+  10: { text: `Lincoln: "The beard thanks you."`,            left: '76%', bottom: '74%' },
+  11: { text: `Goat: "WRONG!! 🐐💥"`,                        left: '50%', bottom: '82%' },
 };
 
 let bubbleTimer = null;
