@@ -203,12 +203,12 @@ function shuffleAndSelectQuestions() {
 // ── Face expression overlay system ───────────────────────────────────────────
 
 // Face centers as fractions of the original image (cx/cy from top-left, fw = face width / image width).
-// Tune these if faces don't line up on screen.
+// Image is 1024×1536. Tune these if faces don't line up on screen.
 const faceDefs = {
-  washington: { cx: 0.215, cy: 0.485, fw: 0.230 },
-  jefferson:  { cx: 0.390, cy: 0.390, fw: 0.200 },
-  roosevelt:  { cx: 0.525, cy: 0.310, fw: 0.180 },
-  lincoln:    { cx: 0.665, cy: 0.248, fw: 0.175 },
+  washington: { cx: 0.215, cy: 0.400, fw: 0.250 },
+  jefferson:  { cx: 0.390, cy: 0.315, fw: 0.210 },
+  roosevelt:  { cx: 0.525, cy: 0.245, fw: 0.190 },
+  lincoln:    { cx: 0.665, cy: 0.190, fw: 0.180 },
 };
 
 // Which president is the climber standing on at each question index
