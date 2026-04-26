@@ -89,7 +89,6 @@ function playLose() {
 }
 
 function playGoatButtSound() {
-  // Goat bleat immediately, then surprised rising yell after a beat
   playGoatBleat();
   setTimeout(() => {
     const ctx = getAudio(), now = ctx.currentTime;
@@ -106,123 +105,141 @@ function playGoatButtSound() {
 }
 // ─────────────────────────────────────────────────────────────────────────────
 
-const questionPool = [
-  { q: "Which U.S. state has the longest coastline?", a: ["California", "Florida", "Alaska"], correct: 2 },
-  { q: "What treaty ended the Revolutionary War?", a: ["Treaty of Paris", "Treaty of Versailles", "Treaty of Ghent"], correct: 0 },
-  { q: "What's the smallest U.S. capital city by population?", a: ["Montpelier", "Pierre", "Juneau"], correct: 0 },
-  { q: "Which U.S. president had a pet alligator?", a: ["John Quincy Adams", "Jefferson", "Lincoln"], correct: 0 },
-  { q: "Which state has the most electoral votes?", a: ["Texas", "Florida", "California"], correct: 2 },
-  { q: "What year did the U.S. enter World War I?", a: ["1914", "1917", "1918"], correct: 1 },
-  { q: "Which city hosted the first U.S. capital?", a: ["New York", "Philadelphia", "Boston"], correct: 0 },
-  { q: "Who was the first president born in a hospital?", a: ["Jimmy Carter", "John F. Kennedy", "Ronald Reagan"], correct: 0 },
-  { q: "Who wrote the Declaration of Independence?", a: ["Benjamin Franklin", "Thomas Jefferson", "George Washington"], correct: 1 },
-  { q: "What was the first U.S. state admitted to the Union?", a: ["Virginia", "Massachusetts", "Delaware"], correct: 2 },
-  { q: "Which president signed the Emancipation Proclamation?", a: ["Ulysses Grant", "Abraham Lincoln", "Andrew Johnson"], correct: 1 },
-  { q: "How many stripes are on the U.S. flag?", a: ["12", "13", "15"], correct: 1 },
-  { q: "Which amendment abolished slavery?", a: ["13th", "14th", "15th"], correct: 0 },
-  { q: "What is the tallest mountain in North America?", a: ["Mount Logan", "Denali", "Mount Rainier"], correct: 1 },
-  { q: "How many justices sit on the U.S. Supreme Court?", a: ["7", "9", "11"], correct: 1 },
-  { q: "What year did the Civil War end?", a: ["1863", "1865", "1867"], correct: 1 },
-  { q: "Which president served the shortest term?", a: ["William Henry Harrison", "James Garfield", "Zachary Taylor"], correct: 0 },
-  { q: "What is the largest U.S. state by area?", a: ["Texas", "California", "Alaska"], correct: 2 },
-  { q: "Which war was fought at Gettysburg?", a: ["Revolutionary War", "Civil War", "War of 1812"], correct: 1 },
-  { q: "Who was the 16th U.S. president?", a: ["Ulysses Grant", "Abraham Lincoln", "Andrew Jackson"], correct: 1 },
-  { q: "In what year did women gain the right to vote in the U.S.?", a: ["1912", "1920", "1924"], correct: 1 },
-  { q: "What river forms the border between Texas and Mexico?", a: ["Colorado River", "Rio Grande", "Pecos River"], correct: 1 },
-  { q: "Which state is known as the 'Sunshine State'?", a: ["California", "Arizona", "Florida"], correct: 2 },
-  { q: "What does NASA stand for?", a: ["National Aeronautics and Space Administration", "National Air and Space Agency", "North American Science Association"], correct: 0 },
-  { q: "Who was the first U.S. president?", a: ["John Adams", "George Washington", "Thomas Jefferson"], correct: 1 },
-  { q: "How many original colonies were there?", a: ["12", "13", "14"], correct: 1 },
-  { q: "Which ocean borders the U.S. to the east?", a: ["Pacific", "Atlantic", "Indian"], correct: 1 },
-  { q: "What year did the U.S. land on the moon?", a: ["1967", "1969", "1971"], correct: 1 },
-  { q: "Which U.S. president appears on the $100 bill?", a: ["Benjamin Franklin", "Andrew Jackson", "Ulysses Grant"], correct: 0 },
-  { q: "Where is the Liberty Bell located?", a: ["Boston", "New York", "Philadelphia"], correct: 2 },
-  { q: "What is the national bird of the United States?", a: ["Golden Eagle", "Bald Eagle", "Wild Turkey"], correct: 1 },
-  { q: "Which state was the last to be admitted to the Union?", a: ["Hawaii", "Alaska", "New Mexico"], correct: 0 },
-  { q: "How many senators does each state have?", a: ["1", "2", "3"], correct: 1 },
-  { q: "What year was the U.S. Constitution signed?", a: ["1776", "1783", "1787"], correct: 2 },
-  { q: "Who gave the 'I Have a Dream' speech?", a: ["Malcolm X", "Martin Luther King Jr.", "Thurgood Marshall"], correct: 1 },
-  { q: "What is the longest river in the U.S.?", a: ["Colorado River", "Mississippi River", "Missouri River"], correct: 2 },
-  { q: "Which president created the New Deal?", a: ["Herbert Hoover", "Franklin D. Roosevelt", "Harry Truman"], correct: 1 },
-  { q: "What state is Mount Rushmore located in?", a: ["Wyoming", "Montana", "South Dakota"], correct: 2 },
-  { q: "Which amendment guarantees freedom of speech?", a: ["1st", "2nd", "4th"], correct: 0 },
-  { q: "What city is the headquarters of the United Nations?", a: ["Washington D.C.", "Geneva", "New York City"], correct: 2 },
-  { q: "Who invented the telephone?", a: ["Thomas Edison", "Alexander Graham Bell", "Nikola Tesla"], correct: 1 },
-  { q: "What is the capital of the United States?", a: ["New York City", "Washington D.C.", "Philadelphia"], correct: 1 },
-  { q: "Which war was known as 'The Great War'?", a: ["World War I", "World War II", "Korean War"], correct: 0 },
-  { q: "How many terms did FDR serve as president?", a: ["2", "3", "4"], correct: 2 },
-  { q: "What does the 'D.C.' stand for in Washington D.C.?", a: ["District of Columbia", "District of Congress", "Department of Capital"], correct: 0 },
-  { q: "Which state is known as the 'Lone Star State'?", a: ["New Mexico", "Texas", "Oklahoma"], correct: 1 },
-  { q: "What year did Pearl Harbor occur?", a: ["1939", "1941", "1943"], correct: 1 },
-  { q: "Who was the first female U.S. Secretary of State?", a: ["Hillary Clinton", "Condoleezza Rice", "Madeleine Albright"], correct: 2 },
-  { q: "What is the smallest U.S. state by area?", a: ["Connecticut", "Rhode Island", "Delaware"], correct: 1 },
-  { q: "Which president signed the Civil Rights Act of 1964?", a: ["John F. Kennedy", "Lyndon B. Johnson", "Richard Nixon"], correct: 1 },
-  { q: "What is the highest peak in the contiguous U.S.?", a: ["Mount Whitney", "Mount Rainier", "Mount Elbert"], correct: 0 },
-  { q: "How many stars are on the U.S. flag?", a: ["48", "50", "52"], correct: 1 },
-  { q: "Who was the youngest person to become U.S. president?", a: ["John F. Kennedy", "Theodore Roosevelt", "Bill Clinton"], correct: 1 },
-  { q: "What war did the U.S. fight in the 1950s on the Korean peninsula?", a: ["Vietnam War", "Korean War", "Cold War"], correct: 1 },
-  { q: "Which U.S. city is known as the 'Windy City'?", a: ["Detroit", "Chicago", "Cleveland"], correct: 1 },
-  { q: "What year was the Statue of Liberty dedicated?", a: ["1876", "1886", "1896"], correct: 1 },
-  { q: "Which president issued the Monroe Doctrine?", a: ["John Adams", "James Monroe", "Andrew Jackson"], correct: 1 },
-  { q: "What is the official language of the United States?", a: ["English", "There is no official language", "American English"], correct: 1 },
-  { q: "Who was Abraham Lincoln's vice president during his second term?", a: ["Hannibal Hamlin", "Andrew Johnson", "Schuyler Colfax"], correct: 1 },
-  { q: "What major document begins with 'We hold these truths to be self-evident'?", a: ["The Constitution", "The Bill of Rights", "The Declaration of Independence"], correct: 2 },
-  { q: "Which state has the most national parks?", a: ["Wyoming", "Colorado", "California"], correct: 2 },
-  { q: "What year did the Great Depression begin?", a: ["1927", "1929", "1931"], correct: 1 },
-  { q: "Which U.S. president was the first to resign from office?", a: ["Richard Nixon", "Andrew Johnson", "Bill Clinton"], correct: 0 },
-];
+// Questions grouped by president. Each game picks:
+//   3 general (base of mountain) +
+//   3 washington + 2 jefferson + 2 roosevelt + 2 lincoln  =  12 total
+const questionPool = {
+  general: [
+    { q: "Which U.S. state has the longest coastline?", a: ["California", "Florida", "Alaska"], correct: 2 },
+    { q: "How many stripes are on the U.S. flag?", a: ["12", "13", "15"], correct: 1 },
+    { q: "What is the tallest mountain in North America?", a: ["Mount Logan", "Denali", "Mount Rainier"], correct: 1 },
+    { q: "How many justices sit on the U.S. Supreme Court?", a: ["7", "9", "11"], correct: 1 },
+    { q: "What is the largest U.S. state by area?", a: ["Texas", "California", "Alaska"], correct: 2 },
+    { q: "What year did Pearl Harbor occur?", a: ["1939", "1941", "1943"], correct: 1 },
+    { q: "What is the national bird of the United States?", a: ["Golden Eagle", "Bald Eagle", "Wild Turkey"], correct: 1 },
+    { q: "Which state was the last to be admitted to the Union?", a: ["Hawaii", "Alaska", "New Mexico"], correct: 0 },
+    { q: "How many senators does each U.S. state have?", a: ["1", "2", "3"], correct: 1 },
+    { q: "What is the smallest U.S. state by area?", a: ["Connecticut", "Rhode Island", "Delaware"], correct: 1 },
+    { q: "Which U.S. city is known as the 'Windy City'?", a: ["Detroit", "Chicago", "Cleveland"], correct: 1 },
+    { q: "What is the longest river in the United States?", a: ["Colorado River", "Mississippi River", "Missouri River"], correct: 2 },
+    { q: "What state is Mount Rushmore located in?", a: ["Wyoming", "Montana", "South Dakota"], correct: 2 },
+    { q: "How many stars are on the U.S. flag?", a: ["48", "50", "52"], correct: 1 },
+    { q: "What year was the Statue of Liberty dedicated?", a: ["1876", "1886", "1896"], correct: 1 },
+    { q: "Which state is known as the 'Sunshine State'?", a: ["California", "Arizona", "Florida"], correct: 2 },
+    { q: "What year did the Great Depression begin?", a: ["1927", "1929", "1931"], correct: 1 },
+    { q: "What year did the U.S. land on the moon?", a: ["1967", "1969", "1971"], correct: 1 },
+    { q: "Which war was known as 'The Great War'?", a: ["World War I", "World War II", "Korean War"], correct: 0 },
+    { q: "Who gave the 'I Have a Dream' speech?", a: ["Malcolm X", "Martin Luther King Jr.", "Thurgood Marshall"], correct: 1 },
+  ],
+  washington: [
+    { q: "Who was the first U.S. president?", a: ["John Adams", "George Washington", "Thomas Jefferson"], correct: 1 },
+    { q: "What treaty ended the Revolutionary War?", a: ["Treaty of Paris", "Treaty of Versailles", "Treaty of Ghent"], correct: 0 },
+    { q: "Which city hosted the first U.S. capital?", a: ["New York", "Philadelphia", "Boston"], correct: 0 },
+    { q: "How many original colonies were there?", a: ["12", "13", "14"], correct: 1 },
+    { q: "What year was the U.S. Constitution signed?", a: ["1776", "1783", "1787"], correct: 2 },
+    { q: "In what year did George Washington become president?", a: ["1789", "1787", "1792"], correct: 0 },
+    { q: "Which state was George Washington from?", a: ["Virginia", "Massachusetts", "New York"], correct: 0 },
+    { q: "Washington famously crossed which river on Christmas night, 1776?", a: ["Potomac River", "Hudson River", "Delaware River"], correct: 2 },
+    { q: "What was the first U.S. state admitted to the Union?", a: ["Virginia", "Massachusetts", "Delaware"], correct: 2 },
+    { q: "Which amendment to the Constitution guarantees freedom of speech?", a: ["1st", "2nd", "4th"], correct: 0 },
+  ],
+  jefferson: [
+    { q: "Who wrote the Declaration of Independence?", a: ["Benjamin Franklin", "Thomas Jefferson", "George Washington"], correct: 1 },
+    { q: "What major document begins 'We hold these truths to be self-evident'?", a: ["The Constitution", "The Bill of Rights", "The Declaration of Independence"], correct: 2 },
+    { q: "Which president made the Louisiana Purchase?", a: ["Thomas Jefferson", "John Adams", "James Madison"], correct: 0 },
+    { q: "Thomas Jefferson founded which university?", a: ["Harvard", "University of Virginia", "Yale"], correct: 1 },
+    { q: "In what year was the Declaration of Independence signed?", a: ["1774", "1776", "1778"], correct: 1 },
+    { q: "What was Thomas Jefferson's Virginia home called?", a: ["Monticello", "Mount Vernon", "Montpelier"], correct: 0 },
+    { q: "Thomas Jefferson was the ___ U.S. president.", a: ["2nd", "3rd", "4th"], correct: 1 },
+  ],
+  roosevelt: [
+    { q: "Which president greatly expanded the U.S. National Parks system?", a: ["William Taft", "Theodore Roosevelt", "Woodrow Wilson"], correct: 1 },
+    { q: "Theodore Roosevelt led which famous military unit in Cuba?", a: ["Blue Brigade", "Rough Riders", "Iron Guard"], correct: 1 },
+    { q: "Which president won the Nobel Peace Prize in 1906?", a: ["William Taft", "Woodrow Wilson", "Theodore Roosevelt"], correct: 2 },
+    { q: "The 'Teddy bear' was named after which president?", a: ["Theodore Roosevelt", "Franklin Roosevelt", "William Taft"], correct: 0 },
+    { q: "Complete Roosevelt's motto: 'Speak softly and carry a big ___.'", a: ["gun", "club", "stick"], correct: 2 },
+    { q: "Theodore Roosevelt was the ___ U.S. president.", a: ["24th", "26th", "28th"], correct: 1 },
+    { q: "What was Theodore Roosevelt's famous nickname?", a: ["Old Hickory", "Teddy", "The Bull Moose"], correct: 1 },
+  ],
+  lincoln: [
+    { q: "Which president signed the Emancipation Proclamation?", a: ["Ulysses Grant", "Abraham Lincoln", "Andrew Johnson"], correct: 1 },
+    { q: "What year did the Civil War end?", a: ["1863", "1865", "1867"], correct: 1 },
+    { q: "Which amendment to the Constitution abolished slavery?", a: ["13th", "14th", "15th"], correct: 0 },
+    { q: "In what year was Abraham Lincoln assassinated?", a: ["1863", "1865", "1868"], correct: 1 },
+    { q: "Who assassinated Abraham Lincoln?", a: ["John Wilkes Booth", "Charles Guiteau", "Leon Czolgosz"], correct: 0 },
+    { q: "Lincoln delivered the Gettysburg Address in which year?", a: ["1861", "1863", "1865"], correct: 1 },
+    { q: "Abraham Lincoln was the ___ U.S. president.", a: ["14th", "16th", "18th"], correct: 1 },
+    { q: "What was Abraham Lincoln's famous nickname?", a: ["Honest Abe", "Old Hickory", "Rough Rider"], correct: 0 },
+  ],
+};
 
 let questions = [];
 
-function shuffleAndSelectQuestions() {
-  const pool = questionPool.slice();
-  for (let i = pool.length - 1; i > 0; i--) {
+function pickRandom(pool, n) {
+  const arr = pool.slice();
+  for (let i = arr.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
-    [pool[i], pool[j]] = [pool[j], pool[i]];
+    [arr[i], arr[j]] = [arr[j], arr[i]];
   }
-  questions = pool.slice(0, 12);
+  return arr.slice(0, n);
 }
 
-// Waypoints trace a path up the mountain, through each president's face.
-// Calibrated for landscape mountain-bg.png.
+function shuffleAndSelectQuestions() {
+  // Q0-Q2: general (base of mountain)
+  // Q3-Q5: Washington's face
+  // Q6-Q7: Jefferson's face
+  // Q8-Q9: Roosevelt's face
+  // Q10-Q11: Lincoln's face
+  questions = [
+    ...pickRandom(questionPool.general, 3),
+    ...pickRandom(questionPool.washington, 3),
+    ...pickRandom(questionPool.jefferson, 2),
+    ...pickRandom(questionPool.roosevelt, 2),
+    ...pickRandom(questionPool.lincoln, 2),
+  ];
+}
+
+// Climber path calibrated for the diagonal portrait image.
+// Steps 3-5 → Washington, 6-7 → Jefferson, 8-9 → Roosevelt, 10-11 → Lincoln, 12 → peak.
 const climberPath = [
-  { bottom: '26%', left: '10%' },  // 0: base of mountain
-  { bottom: '36%', left: '10%' },  // 1: lower rock face
-  { bottom: '46%', left: '11%' },  // 2: mid-mountain
-  { bottom: '52%', left: '13%' },  // 3: Washington's chin
-  { bottom: '56%', left: '12%' },  // 4: Washington's lips
-  { bottom: '61%', left: '13%' },  // 5: Washington's nose
-  { bottom: '66%', left: '16%' },  // 6: Washington's eye
-  { bottom: '72%', left: '20%' },  // 7: top of Washington's head
-  { bottom: '62%', left: '37%' },  // 8: Jefferson's face
-  { bottom: '58%', left: '57%' },  // 9: Roosevelt's mustache
-  { bottom: '58%', left: '76%' },  // 10: Lincoln's chin/beard
-  { bottom: '76%', left: '50%' },  // 11: upper mountain
-  { bottom: '88%', left: '47%' },  // 12: at the peak — win!
+  { bottom: '23%', left: '10%' },  // 0: base of mountain
+  { bottom: '31%', left: '12%' },  // 1: lower rock face
+  { bottom: '39%', left: '17%' },  // 2: approaching Washington
+  { bottom: '43%', left: '20%' },  // 3: Washington's chin
+  { bottom: '49%', left: '21%' },  // 4: Washington's nose
+  { bottom: '54%', left: '23%' },  // 5: Washington's eye
+  { bottom: '57%', left: '37%' },  // 6: Jefferson's chin
+  { bottom: '62%', left: '40%' },  // 7: Jefferson's eye
+  { bottom: '65%', left: '52%' },  // 8: Roosevelt's nose/mustache
+  { bottom: '70%', left: '54%' },  // 9: Roosevelt's eye
+  { bottom: '72%', left: '64%' },  // 10: Lincoln's chin
+  { bottom: '77%', left: '66%' },  // 11: Lincoln's eye — goat warning!
+  { bottom: '89%', left: '53%' },  // 12: at the peak — win!
 ];
 
+// Sky is in the upper-left of this image; bubbles sit there so they're always visible.
 const arrivalReactions = {
-  3:  { text: `Washington: "Watch the chin, pal."`,             left: '16%', bottom: '78%' },
-  4:  { text: `Washington: "He grabbed my LIP!!"`,              left: '16%', bottom: '78%' },
-  5:  { text: `Washington: "There is a BOOT in my NOSTRIL."`,   left: '18%', bottom: '78%' },
-  6:  { text: `Washington: "MY EYE. He poked MY EYE."`,         left: '16%', bottom: '78%' },
-  7:  { text: `Jefferson: "Ha! Look at George's face 😄"`,      left: '38%', bottom: '78%' },
-  8:  { text: `Jefferson: "Oh no. Oh no no no—"`,               left: '38%', bottom: '78%' },
-  9:  { text: `Roosevelt: "NOT. THE. MUSTACHE."`,               left: '58%', bottom: '74%' },
-  10: { text: `Lincoln: "...deeply undignified."`,              left: '76%', bottom: '74%' },
-  11: { text: `Goat: "One more question... don't blow it. 🐐"`, left: '50%', bottom: '82%' },
+  3:  { text: `Washington: "Watch where you're grabbing."`,    left: '26%', bottom: '64%' },
+  4:  { text: `Washington: "BOOT. IN. MY. NOSTRIL."`,          left: '26%', bottom: '64%' },
+  5:  { text: `Washington: "MY EYE. He poked MY EYE."`,        left: '26%', bottom: '64%' },
+  6:  { text: `Jefferson: "Oh no. Oh no no no—"`,              left: '26%', bottom: '72%' },
+  7:  { text: `Jefferson: "This is NOT what I envisioned."`,   left: '26%', bottom: '72%' },
+  8:  { text: `Roosevelt: "NOT. THE. MUSTACHE."`,              left: '26%', bottom: '79%' },
+  9:  { text: `Roosevelt: "I respect the commitment."`,        left: '26%', bottom: '79%' },
+  10: { text: `Lincoln: "...deeply undignified."`,             left: '26%', bottom: '84%' },
+  11: { text: `Goat: "One more question... don't blow it. 🐐"`,left: '46%', bottom: '88%' },
 };
 
 const wrongReactions = {
-  3:  { text: `Washington: "Fall. Just FALL."`,              left: '16%', bottom: '78%' },
-  4:  { text: `Washington: "Ha! That's for the lip!"`,       left: '16%', bottom: '78%' },
-  5:  { text: `Washington: "MY NOSTRIL IS AVENGED."`,        left: '18%', bottom: '78%' },
-  6:  { text: `Washington: "Good. FALL. Far."`,              left: '16%', bottom: '78%' },
-  7:  { text: `Jefferson: "Ooh! So close... 😬"`,            left: '38%', bottom: '78%' },
-  8:  { text: `Jefferson: "Phew. The nose is safe."`,        left: '38%', bottom: '78%' },
-  9:  { text: `Roosevelt: "HA! The 'stache is SAFE!"`,       left: '58%', bottom: '74%' },
-  10: { text: `Lincoln: "The beard thanks you."`,            left: '76%', bottom: '74%' },
-  11: { text: `Goat: "WRONG!! 🐐💥"`,                        left: '50%', bottom: '82%' },
+  3:  { text: `Washington: "Fall. Just FALL."`,              left: '26%', bottom: '64%' },
+  4:  { text: `Washington: "MY NOSTRIL IS AVENGED."`,        left: '26%', bottom: '64%' },
+  5:  { text: `Washington: "Good. FALL. Far."`,              left: '26%', bottom: '64%' },
+  6:  { text: `Jefferson: "Phew. The nose is safe."`,        left: '26%', bottom: '72%' },
+  7:  { text: `Jefferson: "HA! Back down you go!"`,          left: '26%', bottom: '72%' },
+  8:  { text: `Roosevelt: "HA! The 'stache is SAFE!"`,       left: '26%', bottom: '79%' },
+  9:  { text: `Roosevelt: "Almost! Almost."`,                left: '26%', bottom: '79%' },
+  10: { text: `Lincoln: "The beard thanks you."`,            left: '26%', bottom: '84%' },
+  11: { text: `Goat: "WRONG!! 🐐💥"`,                        left: '46%', bottom: '88%' },
 };
 
 let bubbleTimer = null;
@@ -299,7 +316,6 @@ function positionClimber(step) {
   area.style.left = pos.left;
   area.style.bottom = pos.bottom;
 
-  // Sprite faces right by default; flip only when moving left
   const climber = document.getElementById('climber');
   if (step > 0) {
     const prevLeft = parseFloat(climberPath[step - 1].left);
@@ -332,9 +348,7 @@ function goatButt() {
   showReaction(wrongReactions[questions.length - 1]);
   playGoatButtSound();
   const climber = document.getElementById('climber');
-  setTimeout(() => {
-    climber.classList.add('falling');
-  }, 600);
+  setTimeout(() => climber.classList.add('falling'), 600);
   setTimeout(() => {
     document.getElementById('end-message').innerText = '🐐 The goat wins. You\'ve been butted off the mountain!';
     document.getElementById('end-screen').style.display = 'flex';
