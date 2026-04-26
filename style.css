@@ -141,6 +141,22 @@ body {
 
 #answers button:hover { background: #D4C070; }
 
+/* ── Face expression overlays ── */
+.face-overlay {
+  position: absolute;
+  pointer-events: none;
+  z-index: 8;
+  overflow: visible;
+}
+
+.face-overlay .face-expr {
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.face-overlay[data-expr="alert"] .face-expr-alert { opacity: 1; }
+.face-overlay[data-expr="smug"]  .face-expr-smug  { opacity: 1; }
+
 /* ── Speech bubble ── */
 #speech-bubble {
   position: absolute;
