@@ -263,3 +263,54 @@ body {
 #climber.falling {
   animation: fall-off 1.3s ease-in forwards;
 }
+
+/* ── Screen shake ── */
+@keyframes screen-shake {
+  0%   { transform: translate(0,0) rotate(0deg); }
+  20%  { transform: translate(-5px,3px) rotate(-0.3deg); }
+  40%  { transform: translate(4px,-4px) rotate(0.3deg); }
+  60%  { transform: translate(-3px,3px) rotate(-0.2deg); }
+  80%  { transform: translate(3px,-2px) rotate(0.1deg); }
+  100% { transform: translate(0,0) rotate(0deg); }
+}
+
+#game-container.shaking { animation: screen-shake 0.38s ease; }
+
+/* ── Flash overlay ── */
+#flash-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 30;
+  opacity: 0;
+  transition: opacity 0.08s ease;
+}
+
+/* ── Falling pebbles ── */
+@keyframes pebble-fall {
+  to { transform: translate(var(--dx), var(--dy)) rotate(var(--dr)); opacity: 0; }
+}
+
+.pebble {
+  position: absolute;
+  border-radius: 50%;
+  background: #8B7355;
+  pointer-events: none;
+  z-index: 20;
+  animation: pebble-fall 0.65s ease-in forwards;
+}
+
+/* ── Win confetti ── */
+@keyframes confetti-fall {
+  to { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+}
+
+.confetti-piece {
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  pointer-events: none;
+  z-index: 35;
+  animation: confetti-fall var(--dur) ease-in forwards;
+  animation-delay: var(--delay);
+}
