@@ -200,135 +200,6 @@ function shuffleAndSelectQuestions() {
   ];
 }
 
-// ── Face expression overlay system ───────────────────────────────────────────
-
-// Face centers as fractions of the original image (cx/cy from top-left, fw = face width / image width).
-// Image is 1024×1536. Tune these if faces don't line up on screen.
-const faceDefs = {
-  washington: { cx: 0.215, cy: 0.400, fw: 0.250 },
-  jefferson:  { cx: 0.390, cy: 0.315, fw: 0.210 },
-  roosevelt:  { cx: 0.525, cy: 0.245, fw: 0.190 },
-  lincoln:    { cx: 0.665, cy: 0.190, fw: 0.180 },
-};
-
-// Which president is the climber standing on at each question index
-const faceAtQ = {
-  3:'washington', 4:'washington', 5:'washington',
-  6:'jefferson',  7:'jefferson',
-  8:'roosevelt',  9:'roosevelt',
-  10:'lincoln',   11:'lincoln',
-};
-
-const faceSVGs = {
-  washington: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 115" style="width:100%;height:100%;overflow:visible">
-    <g class="face-expr face-expr-alert">
-      <path d="M12 27 Q30 15 48 24" stroke="#3A2010" stroke-width="6.5" fill="none" stroke-linecap="round"/>
-      <path d="M52 24 Q70 15 88 27" stroke="#3A2010" stroke-width="6.5" fill="none" stroke-linecap="round"/>
-      <ellipse cx="30" cy="47" rx="14" ry="15" fill="white" opacity="0.60"/>
-      <ellipse cx="70" cy="47" rx="14" ry="15" fill="white" opacity="0.60"/>
-      <ellipse cx="50" cy="82" rx="9" ry="10" fill="white" stroke="#6A2A10" stroke-width="2.5" opacity="0.75"/>
-    </g>
-    <g class="face-expr face-expr-smug">
-      <path d="M52 22 Q70 13 88 25" stroke="#3A2010" stroke-width="6.5" fill="none" stroke-linecap="round"/>
-      <path d="M34 80 Q48 71 63 77" stroke="#6A2A10" stroke-width="4" fill="none" stroke-linecap="round"/>
-    </g>
-  </svg>`,
-
-  jefferson: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 115" style="width:100%;height:100%;overflow:visible">
-    <g class="face-expr face-expr-alert">
-      <path d="M14 29 Q32 18 50 25" stroke="#3A2010" stroke-width="6.5" fill="none" stroke-linecap="round"/>
-      <path d="M50 25 Q68 18 86 29" stroke="#3A2010" stroke-width="6.5" fill="none" stroke-linecap="round"/>
-      <ellipse cx="31" cy="47" rx="13" ry="14" fill="white" opacity="0.60"/>
-      <ellipse cx="69" cy="47" rx="13" ry="14" fill="white" opacity="0.60"/>
-      <ellipse cx="50" cy="80" rx="8" ry="9" fill="white" stroke="#6A2A10" stroke-width="2.5" opacity="0.75"/>
-    </g>
-    <g class="face-expr face-expr-smug">
-      <path d="M50 23 Q68 15 86 26" stroke="#3A2010" stroke-width="6.5" fill="none" stroke-linecap="round"/>
-      <path d="M35 78 Q49 70 63 76" stroke="#6A2A10" stroke-width="4" fill="none" stroke-linecap="round"/>
-    </g>
-  </svg>`,
-
-  roosevelt: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 115" style="width:100%;height:100%;overflow:visible">
-    <g class="face-expr face-expr-alert">
-      <path d="M14 27 Q32 16 50 23" stroke="#3A2010" stroke-width="6.5" fill="none" stroke-linecap="round"/>
-      <path d="M50 23 Q68 16 86 27" stroke="#3A2010" stroke-width="6.5" fill="none" stroke-linecap="round"/>
-      <circle cx="31" cy="47" r="15" fill="none" stroke="#2A1808" stroke-width="3.5" opacity="0.75"/>
-      <circle cx="69" cy="47" r="15" fill="none" stroke="#2A1808" stroke-width="3.5" opacity="0.75"/>
-      <ellipse cx="50" cy="82" rx="8" ry="9" fill="white" stroke="#6A2A10" stroke-width="2.5" opacity="0.75"/>
-    </g>
-    <g class="face-expr face-expr-smug">
-      <path d="M50 21 Q68 13 86 24" stroke="#3A2010" stroke-width="6.5" fill="none" stroke-linecap="round"/>
-      <path d="M26 65 Q38 57 50 62 Q62 57 74 65" stroke="#2A1808" stroke-width="5" fill="none" stroke-linecap="round"/>
-      <path d="M34 78 Q50 70 66 76" stroke="#6A2A10" stroke-width="4" fill="none" stroke-linecap="round"/>
-    </g>
-  </svg>`,
-
-  lincoln: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 115" style="width:100%;height:100%;overflow:visible">
-    <g class="face-expr face-expr-alert">
-      <path d="M14 25 Q32 14 50 21" stroke="#2A1808" stroke-width="6.5" fill="none" stroke-linecap="round"/>
-      <path d="M50 21 Q68 14 86 25" stroke="#2A1808" stroke-width="6.5" fill="none" stroke-linecap="round"/>
-      <ellipse cx="31" cy="44" rx="13" ry="14" fill="white" opacity="0.60"/>
-      <ellipse cx="69" cy="44" rx="13" ry="14" fill="white" opacity="0.60"/>
-      <ellipse cx="50" cy="75" rx="8" ry="8" fill="white" stroke="#3A1808" stroke-width="2.5" opacity="0.75"/>
-    </g>
-    <g class="face-expr face-expr-smug">
-      <path d="M50 20 Q68 12 86 23" stroke="#2A1808" stroke-width="6.5" fill="none" stroke-linecap="round"/>
-      <path d="M30 74 Q50 66 70 72" stroke="#3A1808" stroke-width="4" fill="none" stroke-linecap="round"/>
-    </g>
-  </svg>`,
-};
-
-let faceOverlaysReady = false;
-
-function setupFaceOverlays() {
-  Object.keys(faceDefs).forEach(name => {
-    const el = document.getElementById('face-' + name);
-    if (el && !el.innerHTML) el.innerHTML = faceSVGs[name];
-  });
-  positionFaceOverlays();
-  if (!faceOverlaysReady) {
-    window.addEventListener('resize', positionFaceOverlays);
-    faceOverlaysReady = true;
-  }
-}
-
-function positionFaceOverlays() {
-  const img = document.getElementById('mountain-bg');
-  if (!img || !img.naturalWidth) return;
-  const container = document.getElementById('game-container');
-  const cW = container.offsetWidth;
-  const cH = container.offsetHeight;
-  const iW = img.naturalWidth;
-  const iH = img.naturalHeight;
-  const scale = Math.max(cW / iW, cH / iH);
-  const rW = iW * scale;
-  const rH = iH * scale;
-  const oX = (cW - rW) / 2;
-  const oY = 0;
-  Object.entries(faceDefs).forEach(([name, d]) => {
-    const el = document.getElementById('face-' + name);
-    if (!el) return;
-    const x = d.cx * rW + oX;
-    const y = d.cy * rH + oY;
-    const w = d.fw * rW;
-    const h = w * 1.15;
-    el.style.left = (x - w / 2) + 'px';
-    el.style.top  = (y - h / 2) + 'px';
-    el.style.width  = w + 'px';
-    el.style.height = h + 'px';
-  });
-}
-
-function setExpression(president, expr) {
-  const el = document.getElementById('face-' + president);
-  if (el) el.dataset.expr = expr;
-}
-
-function clearAllExpressions() {
-  ['washington', 'jefferson', 'roosevelt', 'lincoln'].forEach(p => setExpression(p, 'neutral'));
-}
-// ─────────────────────────────────────────────────────────────────────────────
-
 // Climber path calibrated for the diagonal portrait image.
 // Steps 3-5 → Washington, 6-7 → Jefferson, 8-9 → Roosevelt, 10-11 → Lincoln, 12 → peak.
 const climberPath = [
@@ -396,10 +267,6 @@ function startGame() {
   const climber = document.getElementById('climber');
   climber.classList.remove('falling');
   climber.style.transform = '';
-  clearAllExpressions();
-  const img = document.getElementById('mountain-bg');
-  if (img.complete && img.naturalWidth) setupFaceOverlays();
-  else img.addEventListener('load', setupFaceOverlays, { once: true });
   timeLeft = 120;
   currentQ = 0;
   document.getElementById('time-left').innerText = timeLeft;
@@ -461,10 +328,6 @@ function positionClimber(step) {
   if (step === 11) setTimeout(playGoatBleat, 400);
   if (arrivalReactions[step]) playYelp();
   showReaction(arrivalReactions[step]);
-
-  // Update face expressions
-  clearAllExpressions();
-  if (faceAtQ[step]) setExpression(faceAtQ[step], 'alert');
 }
 
 function slipClimber() {
@@ -477,11 +340,6 @@ function slipClimber() {
   area.classList.add('slipping');
   setTimeout(() => area.classList.remove('slipping'), 600);
   showReaction(wrongReactions[currentQ]);
-  const face = faceAtQ[currentQ];
-  if (face) {
-    setExpression(face, 'smug');
-    setTimeout(() => setExpression(face, 'alert'), 2200);
-  }
 }
 
 function goatButt() {
