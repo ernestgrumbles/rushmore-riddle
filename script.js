@@ -12,27 +12,42 @@ function getAudio() {
 
 function playCorrect() {
   const ctx = getAudio(), now = ctx.currentTime;
-  [220, 330].forEach((freq, i) => {
+  const tbuf = ctx.createBuffer(1, Math.floor(ctx.sampleRate * 0.12), ctx.sampleRate);
+  const td = tbuf.getChannelData(0);
+  for (let i = 0; i < td.length; i++) td[i] = (Math.random() * 2 - 1) * Math.exp(-i / (ctx.sampleRate * 0.04));
+  const tsrc = ctx.createBufferSource();
+  tsrc.buffer = tbuf;
+  const tg = ctx.createGain(); tg.gain.value = 0.22;
+  tsrc.connect(tg); tg.connect(ctx.destination); tsrc.start(now);
+  [330, 440, 550].forEach((freq, i) => {
     const osc = ctx.createOscillator(), g = ctx.createGain();
     osc.connect(g); g.connect(ctx.destination);
     osc.type = 'sine'; osc.frequency.value = freq;
-    const t = now + i * 0.09;
-    g.gain.setValueAtTime(0.25, t);
-    g.gain.exponentialRampToValueAtTime(0.001, t + 0.2);
-    osc.start(t); osc.stop(t + 0.2);
+    const t = now + 0.08 + i * 0.09;
+    g.gain.setValueAtTime(0.18, t);
+    g.gain.exponentialRampToValueAtTime(0.001, t + 0.28);
+    osc.start(t); osc.stop(t + 0.28);
   });
 }
 
 function playWrong() {
   const ctx = getAudio(), now = ctx.currentTime;
+  const rbuf = ctx.createBuffer(1, Math.floor(ctx.sampleRate * 0.9), ctx.sampleRate);
+  const rd = rbuf.getChannelData(0);
+  for (let i = 0; i < rd.length; i++) rd[i] = (Math.random() * 2 - 1) * Math.exp(-i / (ctx.sampleRate * 0.35));
+  const rsrc = ctx.createBufferSource();
+  rsrc.buffer = rbuf;
+  const lpf = ctx.createBiquadFilter(); lpf.type = 'lowpass'; lpf.frequency.value = 200;
+  const rg = ctx.createGain(); rg.gain.value = 0.45;
+  rsrc.connect(lpf); lpf.connect(rg); rg.connect(ctx.destination); rsrc.start(now);
   const osc = ctx.createOscillator(), g = ctx.createGain();
   osc.connect(g); g.connect(ctx.destination);
   osc.type = 'sawtooth';
-  osc.frequency.setValueAtTime(380, now);
-  osc.frequency.exponentialRampToValueAtTime(75, now + 0.5);
-  g.gain.setValueAtTime(0.2, now);
-  g.gain.exponentialRampToValueAtTime(0.001, now + 0.5);
-  osc.start(now); osc.stop(now + 0.5);
+  osc.frequency.setValueAtTime(350, now);
+  osc.frequency.exponentialRampToValueAtTime(70, now + 0.65);
+  g.gain.setValueAtTime(0.18, now);
+  g.gain.exponentialRampToValueAtTime(0.001, now + 0.65);
+  osc.start(now); osc.stop(now + 0.65);
 }
 
 function playYelp() {
@@ -65,14 +80,23 @@ function playGoatBleat() {
 
 function playWin() {
   const ctx = getAudio(), now = ctx.currentTime;
-  [262, 330, 392, 523, 659].forEach((freq, i) => {
+  [262, 330, 392, 494, 523, 659].forEach((freq, i) => {
     const osc = ctx.createOscillator(), g = ctx.createGain();
     osc.connect(g); g.connect(ctx.destination);
-    osc.type = 'square'; osc.frequency.value = freq;
-    const t = now + i * 0.13;
+    osc.type = 'triangle'; osc.frequency.value = freq;
+    const t = now + i * 0.11;
+    g.gain.setValueAtTime(0.15, t);
+    g.gain.exponentialRampToValueAtTime(0.001, t + 0.5);
+    osc.start(t); osc.stop(t + 0.5);
+  });
+  [523, 659, 784, 1047].forEach(freq => {
+    const osc = ctx.createOscillator(), g = ctx.createGain();
+    osc.connect(g); g.connect(ctx.destination);
+    osc.type = 'sine'; osc.frequency.value = freq;
+    const t = now + 0.72;
     g.gain.setValueAtTime(0.12, t);
-    g.gain.exponentialRampToValueAtTime(0.001, t + 0.4);
-    osc.start(t); osc.stop(t + 0.4);
+    g.gain.exponentialRampToValueAtTime(0.001, t + 1.4);
+    osc.start(t); osc.stop(t + 1.4);
   });
 }
 
@@ -88,6 +112,98 @@ function playLose() {
     osc.start(t); osc.stop(t + 0.5);
   });
 }
+
+function playTick() {
+  const ctx = getAudio(), now = ctx.currentTime;
+  const osc = ctx.createOscillator(), g = ctx.createGain();
+  osc.connect(g); g.connect(ctx.destination);
+  osc.type = 'square'; osc.frequency.value = 1100;
+  g.gain.setValueAtTime(0.07, now);
+  g.gain.exponentialRampToValueAtTime(0.001, now + 0.07);
+  osc.start(now); osc.stop(now + 0.07);
+}
+
+// ── Wind ambience ─────────────────────────────────────────────────────────────
+let windSrc = null, windGainNode = null;
+
+function startWind() {
+  const ctx = getAudio();
+  const sr = ctx.sampleRate;
+  const buf = ctx.createBuffer(1, sr * 2, sr);
+  const data = buf.getChannelData(0);
+  for (let i = 0; i < data.length; i++) data[i] = Math.random() * 2 - 1;
+  windSrc = ctx.createBufferSource();
+  windSrc.buffer = buf;
+  windSrc.loop = true;
+  const bpf = ctx.createBiquadFilter();
+  bpf.type = 'bandpass'; bpf.frequency.value = 600; bpf.Q.value = 0.7;
+  windGainNode = ctx.createGain();
+  windGainNode.gain.value = 0;
+  windSrc.connect(bpf); bpf.connect(windGainNode); windGainNode.connect(ctx.destination);
+  windSrc.start();
+}
+
+function setWindLevel(step) {
+  if (!windGainNode) return;
+  windGainNode.gain.setTargetAtTime((step / 12) * 0.07, getAudio().currentTime, 0.8);
+}
+
+function stopWind() {
+  if (windSrc) { try { windSrc.stop(); } catch(e) {} windSrc = null; windGainNode = null; }
+}
+// ─────────────────────────────────────────────────────────────────────────────
+
+// ── Visual effects ────────────────────────────────────────────────────────────
+function flashScreen(color) {
+  const el = document.getElementById('flash-overlay');
+  if (!el) return;
+  el.style.background = color === 'green' ? 'rgba(60,200,80,0.30)' : 'rgba(220,40,20,0.38)';
+  el.style.opacity = '1';
+  setTimeout(() => { el.style.opacity = '0'; }, 130);
+}
+
+function shakeScreen() {
+  const el = document.getElementById('game-container');
+  el.classList.remove('shaking');
+  void el.offsetWidth;
+  el.classList.add('shaking');
+  setTimeout(() => el.classList.remove('shaking'), 420);
+}
+
+function spawnPebbles() {
+  const area = document.getElementById('climber-area');
+  const container = document.getElementById('game-container');
+  const aRect = area.getBoundingClientRect();
+  const cRect = container.getBoundingClientRect();
+  const cx = aRect.left - cRect.left + aRect.width / 2;
+  const cy = aRect.top - cRect.top + aRect.height * 0.4;
+  for (let i = 0; i < 6; i++) {
+    const p = document.createElement('div');
+    p.className = 'pebble';
+    const size = 4 + Math.random() * 5;
+    const dx = (Math.random() - 0.5) * 70;
+    const dy = 30 + Math.random() * 55;
+    const dr = (Math.random() * 2 - 1) * 360;
+    p.style.cssText = `left:${cx}px;top:${cy}px;width:${size}px;height:${size}px;--dx:${dx}px;--dy:${dy}px;--dr:${dr}deg`;
+    container.appendChild(p);
+    setTimeout(() => p.remove(), 700);
+  }
+}
+
+function spawnConfetti() {
+  const container = document.getElementById('game-container');
+  const colors = ['#FFD700','#FF6B6B','#4ECDC4','#45B7D1','#96CEB4','#FFEAA7','#DDA0DD'];
+  for (let i = 0; i < 35; i++) {
+    const c = document.createElement('div');
+    c.className = 'confetti-piece';
+    const delay = Math.random() * 0.6;
+    const dur = 0.9 + Math.random() * 0.8;
+    c.style.cssText = `left:${Math.random()*100}%;top:-10px;background:${colors[i%colors.length]};--delay:${delay}s;--dur:${dur}s`;
+    container.appendChild(c);
+    setTimeout(() => c.remove(), (delay + dur) * 1000 + 200);
+  }
+}
+// ─────────────────────────────────────────────────────────────────────────────
 
 function playGoatButtSound() {
   playGoatBleat();
@@ -267,14 +383,17 @@ function startGame() {
   const climber = document.getElementById('climber');
   climber.classList.remove('falling');
   climber.style.transform = '';
+  stopWind();
   timeLeft = 120;
   currentQ = 0;
   document.getElementById('time-left').innerText = timeLeft;
   document.getElementById('speech-bubble').classList.remove('visible');
   positionClimber(0);
+  startWind();
   timerId = setInterval(() => {
     timeLeft--;
     document.getElementById('time-left').innerText = timeLeft;
+    if (timeLeft <= 10) playTick();
     if (timeLeft <= 0) {
       clearInterval(timerId);
       gameOver();
@@ -324,10 +443,11 @@ function positionClimber(step) {
     climber.style.transform = currLeft < prevLeft ? 'scaleX(-1)' : 'scaleX(1)';
   }
 
-  if (step > 0) playCorrect();
+  if (step > 0) { playCorrect(); flashScreen('green'); }
   if (step === 11) setTimeout(playGoatBleat, 400);
   if (arrivalReactions[step]) playYelp();
   showReaction(arrivalReactions[step]);
+  setWindLevel(step);
 }
 
 function slipClimber() {
@@ -337,12 +457,16 @@ function slipClimber() {
   }
   const area = document.getElementById('climber-area');
   playWrong();
+  shakeScreen();
+  spawnPebbles();
+  flashScreen('red');
   area.classList.add('slipping');
   setTimeout(() => area.classList.remove('slipping'), 600);
   showReaction(wrongReactions[currentQ]);
 }
 
 function goatButt() {
+  stopWind();
   clearInterval(timerId);
   document.getElementById('question-box').innerText = '';
   document.getElementById('answers').innerHTML = '';
@@ -361,6 +485,7 @@ function updateReaction(text) {
 }
 
 function gameOver() {
+  stopWind();
   playLose();
   clearInterval(timerId);
   document.getElementById('question-box').innerText = '';
@@ -370,7 +495,9 @@ function gameOver() {
 }
 
 function winGame() {
+  stopWind();
   playWin();
+  spawnConfetti();
   clearInterval(timerId);
   document.getElementById('question-box').innerText = '';
   document.getElementById('answers').innerHTML = '';
